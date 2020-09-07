@@ -1,0 +1,17 @@
+{
+  "name": "gulpenv",
+  "version": "1.0.0",
+  "description": "automating boring stuff with gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ameste",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-terser": "^1.4.0"
+  }
+}
