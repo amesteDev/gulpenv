@@ -12,7 +12,7 @@ Move everything to the right directory in the 'pub'-folder, ready to be put up o
 To install this on your machine make sure you have node.js and npm installed, then do this: 
 
 ```
-git clone https://github.com/amesteDev/simon_says
+git clone https://github.com/amesteDev/gulpenv
 ```
 
 And then (in the directory where the local files are located):
