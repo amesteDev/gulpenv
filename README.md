@@ -49,5 +49,5 @@ And then (in the directory where the local files are located):
 Start by using:
 
 ```
-gulp
+gulp webdevkit
 ```

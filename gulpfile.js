@@ -68,7 +68,7 @@ function watchingYou() {
 	watch('pub/img').on('change', browsersync.reload);
 }
 
-exports.default = series(
+exports.webdevkit = series(
 	parallel(copyHTML, jsFix, cssFix, imgFix),
 	watchingYou
 );
