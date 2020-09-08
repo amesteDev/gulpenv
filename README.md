@@ -43,7 +43,7 @@ git clone https://github.com/amesteDev/gulpenv
 And then (in the directory where the local files are located):
 
 ```
-npm install
+(sudo) npm install && npm install gulp --save-dev
 ```
 
 Start by using:
