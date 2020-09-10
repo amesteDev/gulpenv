@@ -62,10 +62,8 @@ function watchingYou() {
 	watch([paths.htmlPATH, paths.cssPATH, paths.jsPATH, paths.imgPATH],
 		parallel(copyHTML, jsFix, cssFix, imgFix));
 
-	watch('pub/js').on('change', browsersync.reload);
-	watch('pub/css').on('change', browsersync.reload);
-	watch('pub').on('change', browsersync.reload);
-	watch('pub/img').on('change', browsersync.reload);
+	watch(['pub/js', 'pub/css', 'pub', 'pub/img']).on('change', browsersync.reload);
+
 }
 
 exports.webdevkit = series(
