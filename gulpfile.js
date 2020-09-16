@@ -7,13 +7,17 @@ const terser = require("gulp-terser");
 const imgmin = require("gulp-imagemin");
 const concat = require("gulp-concat");
 const cleancss = require("gulp-clean-css");
+const sass = require('gulp-sass');
+const rename = require("gulp-rename");
+sass.compiler = require('node-sass');
 
 //setting up paths to be used
 const paths = {
 	htmlPATH: "src/**/*.html",
 	cssPATH: "src/**/*.css",
 	jsPATH: "src/**/*.js",
-	imgPATH: "src/img/*"
+	imgPATH: "src/img/*",
+	sassPATH: "src/**/*.scss"
 }
 
 //copy HTML from the SRC-folder to the pub-folder
@@ -40,14 +44,22 @@ function cssFix() {
 }
 
 //minimize images, change quality and optimizationlevel to be according to the standards of your project
-function imgFix(){
+function imgFix() {
 	return src(paths.imgPATH)
 		.pipe(imgmin([
-			imgmin.gifsicle({interlaced: true}),
-			imgmin.mozjpeg({quality: 75, progressive: true}),
-			imgmin.optipng({optimizationLevel: 5})
+			imgmin.gifsicle({ interlaced: true }),
+			imgmin.mozjpeg({ quality: 75, progressive: true }),
+			imgmin.optipng({ optimizationLevel: 5 })
 		]))
 		.pipe(dest('pub/img'))
+}
+
+//do the sassmagic and create some css from the .scss files and move it to pub/css
+function sassFix() {
+	return src(paths.sassPATH)
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+		.pipe(rename('style.css'))
+		.pipe(dest('./pub/css'))
 }
 
 //browsersync to update the webpage in the browser as changes are made aswell as look for changes in the src-files and run the functions above
@@ -59,14 +71,34 @@ function watchingYou() {
 		}
 	});
 
-	watch([paths.htmlPATH, paths.cssPATH, paths.jsPATH, paths.imgPATH],
-		parallel(copyHTML, jsFix, cssFix, imgFix));
+	watch([paths.htmlPATH, paths.cssPATH, paths.jsPATH],
+		parallel(copyHTML, jsFix, cssFix));
 
-	watch(['pub/js', 'pub/css', 'pub', 'pub/img']).on('change', browsersync.reload);
-
+	watch(['pub/js', 'pub/css', 'pub']).on('change', browsersync.reload);
 }
 
-exports.webdevkit = series(
+function watchingYouSass() {
+
+	browsersync.init({
+		server: {
+			baseDir: './pub/'
+		}
+	});
+
+	watch([paths.htmlPATH, paths.cssPATH, paths.sassPATH, paths.jsPATH],
+		parallel(copyHTML, jsFix, sassFix), cssFix);
+
+	watch(['pub/js', 'pub/sass', 'pub']).on('change', browsersync.reload);
+}
+
+//starts gulp with css
+exports.default = series(
 	parallel(copyHTML, jsFix, cssFix, imgFix),
 	watchingYou
+);
+
+//starts gulp with sass
+exports.webwsass = series(
+	parallel(copyHTML, jsFix, sassFix, imgFix),
+	watchingYouSass
 );
