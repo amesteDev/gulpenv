@@ -30,6 +30,8 @@ The packages that are used in this gulp-setup:
 
 	gulp-concat - puts several files together into one
 
+	gulp-sass - sass to css functions
+
 All the packages have been handpicked by me, because they had the most or near the most downloads per week on npmjs.
 
 ***
@@ -46,8 +48,14 @@ And then (in the directory where the local files are located):
 (sudo) npm install && npm install gulp --save-dev
 ```
 
-Start by using:
+Start by using (standard css):
 
 ```
-gulp webdevkit
+gulp 
+```
+
+or (for sass support)
+
+```
+gulp webwsass
 ```
